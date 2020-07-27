@@ -14,3 +14,6 @@
 ## Años de cursado
 
 - [Cursado 2020](2020/2020.md)
+
+## Recursos
+* Configurar entorno instalando Android Studio - [link](general/androidStudio.md)

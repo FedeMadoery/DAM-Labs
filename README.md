@@ -17,3 +17,5 @@
 
 ## Recursos
 * Configurar entorno instalando Android Studio - [link](general/androidStudio.md)
+
+* Introduccion a GIT - [link](general/git.md)

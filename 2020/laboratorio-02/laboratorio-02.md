@@ -27,6 +27,16 @@ Consultar el tutorial presentado en el taller 1 ante cualquier duda.
 
 Cambiar el estilo de la aplicación para que use un tema _NoActionBar_. Luego, crear una nueva actividad denominada “Home” que solo tenga un _textview_ con un mensaje de bienvenida. 
 
+Para que la nueva Activity Home, sea lo primero que el usuario vea, se debe editar el  `AndroidManifest.xml` aclarando este cambio de comportamiento:
+```
+<activity android:name=".HomeActivity">
+    <intent-filter>
+        <action android:name="android.intent.action.MAIN" />
+        <category android:name="android.intent.category.LAUNCHER" />
+    </intent-filter>
+</activity>
+```
+
 Agregar a esta pantalla home una _Toolbar_ que tendrá 3 opciones 
 
 - Registrarme (la actividad creada en el laboratorio 01) 

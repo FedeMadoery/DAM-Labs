@@ -15,7 +15,7 @@
 ### 1. Clonar el proyecto realizado en el laboratorio anterior 
 ######(De no tenerlo ya de manera local) 
 
-   ![](imagenes/6-GithubRepo.png)
+   ![](../laboratorio-01/imagenes/6-GithubRepo.png)
 
 De esta manera ahora tiene una copia del proyecto en su repositorio local. A continuación abrir el proyecto en Android Studio y hacer un checkout de la branch develop. 
 

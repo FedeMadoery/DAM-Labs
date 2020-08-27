@@ -129,7 +129,7 @@ Se plantea realizar la pantalla de registro de usuarios la app, esta pantalla cu
 1. Los siguientes datos son obligatorios:
     * Correo electrónico
     * Clave
-    * Tarjeta de Credito
+    * Tarjeta
     * Tipo de tarjeta
     * CCV
     * Fecha de vencimiento de tarjeta
@@ -139,8 +139,153 @@ Se plantea realizar la pantalla de registro de usuarios la app, esta pantalla cu
 5. Verificar que si ingresó una tarjeta de crédito la fecha de vencimiento por lo menos sea superior a los próximos 3 meses
 6. Cualquier condición de las anteriores que no se cumpla deberá mostrar un mensaje con el toast notificando al usuario. Si todas las validaciones son cumplidas notificar al usuario utilizando un toast con un mensaje de exito.
 
+### 5. Modelo de datos de usuario
+
+El objetivo de esta etapa es poder capturar los datos que ingreso el usuario en la interfaz grafica y setearlos, ya cumpliendo las reglas de negocio, en nuestro modelo del dominio.
+
+1. Dentro de nuestr aplicación crear un nuevo paquete `model`
+
+    ![](imagenes/17-ModelPackage.png)
+2. Dentro de nuestro model crear las clases `Usuario`, `Tarjeta` y `CuentaBancaria`
+
+    ![](imagenes/18-Classes.png)
+
+    > Los constructores y getters de las clases que se pueden ver en el siguiente punto fueron generados automaticamente con herramientas del IDE. Estas herramientas se pueden acceder haciendo click derecho y presionando `Generate...` o `ALT + N` (Win y Linux) o `CMD + N` (Mac)
+    ![](imagenes/19-Generate.png)
 
 
+    * Estructura `Tarjeta`:
+        ```java
+        import java.util.Date;
 
+        public class Tarjeta {
+            private String numero;
+            private String ccv;
+            private Date vencimiento;
+            private boolean esCredito;
 
+            public Tarjeta(String numero, String ccv, Date vencimiento, boolean esCredito) {
+                this.numero = numero;
+                this.ccv = ccv;
+                this.vencimiento = vencimiento;
+                this.esCredito = esCredito;
+            }
+
+            public String getNumero() {
+                return numero;
+            }
+
+            public String getCcv() {
+                return ccv;
+            }
+
+            public Date getVencimiento() {
+                return vencimiento;
+            }
+
+            public boolean isEsCredito() {
+                return esCredito;
+            }
+        }
+        ```
+    * Estructura `CuentaBancaria`:
+        ```java
+        public class CuentaBancaria {
+            private String cbu;
+            private String alias;
+
+            public CuentaBancaria(String cbu, String alias) {
+                this.cbu = cbu;
+                this.alias = alias;
+            }
+
+            public String getCbu() {
+                return cbu;
+            }
+
+            public String getAlias() {
+                return alias;
+            }
+        }
+        ```
+    * Estructura `Usuario`:
+        ```java
+        public class Usuario {
+            private int id;
+            private String nombre;
+            private String clave;
+            private String email;
+            private Double credito;
+            private Tarjeta tarjeta;
+            private CuentaBancaria cuentaBancaria;
+
+            public Usuario(int id, String nombre, String clave, String email, Double credito, Tarjeta tarjeta, CuentaBancaria cuentaBancaria) {
+                this.id = id;
+                this.nombre = nombre;
+                this.clave = clave;
+                this.email = email;
+                this.credito = credito;
+                this.tarjeta = tarjeta;
+                this.cuentaBancaria = cuentaBancaria;
+            }
+
+            public int getId() {
+                return id;
+            }
+
+            public String getNombre() {
+                return nombre;
+            }
+
+            public String getClave() {
+                return clave;
+            }
+
+            public String getEmail() {
+                return email;
+            }
+
+            public Double getCredito() {
+                return credito;
+            }
+
+            public Tarjeta getTarjeta() {
+                return tarjeta;
+            }
+
+            public CuentaBancaria getCuentaBancaria() {
+                return cuentaBancaria;
+            }
+        }
+        ```
+
+### 6. Persistir en git y compartir en github
+1. Verificar que la app se encuentre funcionando al presionar el botton `Play`
+2. Desde android studio presionar `VCS` → `Commit` o el atajo de teclado `CTRL + K` (Win y Linux) o `CMD + K` (Mac)
+    ![](imagenes/20-Commit.png)
+3. En la ventana seleccione todos los archivos que desea persistir en el commit y asegurarse de:
+    * Escribir un mensaje de commit significativo de los cambios que realizo
+    * Completar el nombre del autor en formato `userDeGit <correo@electronico.com>`
+    * Destildar `Perform code analysis` y `Check TODO` (No es estrictamente necesario, si no los destildamos nos mostrara un warning con cosas que el ide considera que podrian mejorarse o mensajes marcados como "TO-DO")
+
+    ![](imagenes/21-CommitScreen.png)
+
+    EJEMPLO:
+    ![](imagenes/22-CommitScreenExample.png)
+    > Notese que en este ejemplo solo se estan subiendo las clases del model, esto es porque en este caso ya se habian realizado commits previos con otras partes del lab. Ademas, no se esta subiendo el contenido de la carpeta `.idea` ya que son archivos de configuración del IDE y no es necesario. 
+4. Una vez completados los datos del commit presionar el botón `Commit` para efectuar la acción
+5. Con nuestros cambios commiteados en nuestro repositorio local es momento de persistirlos en github, para esto necesitamos realizar un `PUSH` a nuestro repositorio remoto (en github), desde el IDE podemos encontrarla presinando  `VCS` → `Git` → `Push` o el atajo de teclado `CTRL + SHIFT + K` (Win y Linux) o `CMD + SHIFT + K` (Mac)
+
+    ![](imagenes/23-Push.png)
+6. Luego nos aparecera una ventana de confirmacion con los commits que esten en nuestro repositorio local y no en el remoto, estos son los commits que seran pusheados.
+    
+    ![](imagenes/24-PushConfirmation.png)
+    > En la imagen se puede ver que nos indica que la rama lab-01 (local) sera pusheado ( → ) a la rama lab-01 en github (origin, o el nombre que le hayamos asignado al `Remote` en el paso 3 del item 2 - Configurar GIT)
+7. Si todo esta ok presionamos `Push` y comenzará a realizar el proceso para pushear nuestros cambios a github (Es posible que nos pida nuestras credenciales de acceso a github si no las habiamos puesto antes).
+8. Comprobar en el sitio
+    * Navegar a `https://github.com/{usuario}/{nombre-de-repo}/`
+    * Seleccionar la rama lab-3
+    * Comprobar que se vea reflejado el commit que hemos realizado
+    
+    ![](imagenes/25-GithubCommit.png)
 

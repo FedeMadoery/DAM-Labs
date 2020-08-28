@@ -284,7 +284,7 @@ El objetivo de esta etapa es poder capturar los datos que ingreso el usuario en 
 7. Si todo esta ok presionamos `Push` y comenzará a realizar el proceso para pushear nuestros cambios a github (Es posible que nos pida nuestras credenciales de acceso a github si no las habiamos puesto antes).
 8. Comprobar en el sitio
     * Navegar a `https://github.com/{usuario}/{nombre-de-repo}/`
-    * Seleccionar la rama lab-3
+    * Seleccionar la rama lab-1
     * Comprobar que se vea reflejado el commit que hemos realizado
     
     ![](imagenes/25-GithubCommit.png)

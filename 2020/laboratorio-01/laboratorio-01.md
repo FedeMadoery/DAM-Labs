@@ -86,7 +86,7 @@
 
 Se plantea realizar la pantalla de registro de usuarios la app, esta pantalla cuenta con gran cantidad de inputs y deberá reaccionar al estado de los inputs (ej: no dejar registrar al usuario si faltan campos por completar)
 
-![](imagenes/10-finished.png)
+![](imagenes/10-Finished.png)
 
 #### Consideraciones
 

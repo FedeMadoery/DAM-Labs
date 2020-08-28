@@ -66,7 +66,8 @@
 ![](imagenes/9-DevelopCreated.png)
 
 7. Crear una nueva rama con el nombre `lab01`.
-![](imagenes/10-Lab01Created.png)
+
+    ![](imagenes/10-Lab01Created.png)
     > Asegurarse de que se encuentre trabajando en la rama lab01 para la realizacion del laboratorio 1.
 
 ### 3. Configurar UI - (LinearLayout)
@@ -85,7 +86,7 @@
 
 Se plantea realizar la pantalla de registro de usuarios la app, esta pantalla cuenta con gran cantidad de inputs y deberá reaccionar al estado de los inputs (ej: no dejar registrar al usuario si faltan campos por completar)
 
-//TODO: Capturas del resultado final!!!!
+![](imagenes/10-finished.png)
 
 #### Consideraciones
 * Al rotar la pantalla del celular no se deberán perder los contenidos de los inputs

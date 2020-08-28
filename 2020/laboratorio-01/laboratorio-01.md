@@ -89,8 +89,7 @@ Se plantea realizar la pantalla de registro de usuarios la app, esta pantalla cu
 ![](imagenes/10-finished.png)
 
 #### Consideraciones
-* Al rotar la pantalla del celular no se deberán perder los contenidos de los inputs
-    * [https://developer.android.com/guide/components/activities/activity-lifecycle#saras](https://developer.android.com/guide/components/activities/activity-lifecycle#saras)
+
 * Para el armado de la interface, no deberá usar texto directo, sino que deberá escribir todos los String en el archivo strings.xml 
 * Los colores personalizadores deberan ser creados en el archivo colors.xml
 * Crear en el directorio res/values el archivos dimensiones.xml ( click en el menú “File” → New → Values Resource File ) para almacenar los tamaños de elementos y fuentes
@@ -103,10 +102,8 @@ Se plantea realizar la pantalla de registro de usuarios la app, esta pantalla cu
 * Los inputs de clave y repetir clave deberan oscurecer la contraseña (tipo `password`) y deben ser iguales para que se considere valido
 * El numero de tarjeta debe ser un input `numerico`
 * El numero CCV de la tarjeta es un input `numerico` el cual estara visible pero deshabilitado si el numero de la tarjeta esta vacio
-* El mes y año de vencimiento como dos dropdown (`spinner`), igual que el CCV solo editar si se ha completado el numero de tarjeta.
-    * [https://developer.android.com/guide/topics/ui/controls/spinner](https://developer.android.com/guide/topics/ui/controls/spinner)
-    * Solo es necesario cargar un par de años para mostrar la funcionalidad
-
+* El mes y año de vencimiento como dos input `numericos`, igual que el CCV solo editar si se ha completado el numero de tarjeta.
+    * Aclaración, para esta primera etapa se utilizarán `EditText` pero posteriormente seran reemplazados por `Spinners` como se puede ver en la imagen de la ui propuesta finalizada.
 * El tipo de tarjeta puede ser 'debito' o 'credito' seleccionando una de las dos opciones a través de un `RadioGroup`
 * Un slider (`seekbar`) para que el usuario el monto de dinero inicial que desea cargar (valores entre 0 y 1500).
     * [https://developer.android.com/reference/android/widget/SeekBar](https://developer.android.com/reference/android/widget/SeekBar)

@@ -1,7 +1,7 @@
 ![](https://www.frsf.utn.edu.ar/templates/utn17/img/utnsantafe-color.png)
 
 # Trabajo práctico integrador - Laboratorio 1
-
+> Fecha de entrega para el laboratoratorio 1: 11 de Septiembre 2020
 ## Objetivos
 
 - Familiarizarse con Android Studio
@@ -87,6 +87,7 @@
 Se plantea realizar la pantalla de registro de usuarios la app, esta pantalla cuenta con gran cantidad de inputs y deberá reaccionar al estado de los inputs (ej: no dejar registrar al usuario si faltan campos por completar)
 
 ![](imagenes/10-Finished.png)
+![](imagenes/10-Finished2.png)
 
 #### Consideraciones
 

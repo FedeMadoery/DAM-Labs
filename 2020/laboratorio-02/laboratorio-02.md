@@ -1,7 +1,7 @@
 ![](https://www.frsf.utn.edu.ar/templates/utn17/img/utnsantafe-color.png)
 
 # Trabajo práctico integrador - Laboratorio 2
-
+> Fecha de entrega para el laboratoratorio 2: 25 de Septiembre 2020
 ## Objetivos
 
 - Utilizar Intent explícitos y gestionar actividades

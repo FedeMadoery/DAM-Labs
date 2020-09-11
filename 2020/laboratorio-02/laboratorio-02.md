@@ -13,7 +13,7 @@
 ## Tareas a desarrollar
 
 ### 1. Clonar el proyecto realizado en el laboratorio anterior 
-######(De no tenerlo ya de manera local) 
+###### (De no tenerlo ya de manera local) 
 
    ![](../laboratorio-01/imagenes/6-GithubRepo.png)
 

@@ -58,7 +58,6 @@ Para agregar la ToolBar ( `androidx.appcompat.widget.Toolbar `) se debe para cad
 En esta actividad, el usuario deberá poder ingresar los datos necesarios para el alta de un plato. 
 
 Estos datos son: 
-- ID (Integer) 
 - Título (String) 
 - Descripción (String) 
 - Precio (Double) 
@@ -68,7 +67,7 @@ Validar el ingreso correcto de dichos datos y definir los textos necesarios en e
 
 El layout empleado para este formulario queda a elección del desarrollador, pudiéndose utilizar el layout sugerido.
 
-// TODO ADD IMG
+![](imagenes/1-Form-New-Meal.png)
 
 Al presionar el botón “Guardar”, se debe crear una nueva instancia de Plato, para lo cual previamente deberá definir la clase Plato, junto con su constructor, getters y setters.
 

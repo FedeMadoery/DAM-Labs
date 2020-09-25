@@ -25,6 +25,29 @@ Esta activity contará con un boton de "Agregar platos" que nos llevara a la act
 
 Además, la actividad de creación de pedidos contará con un listado que mostrará el nombre de los platos incluidos y un detalle mostrando la cantidad de productos en la orden y el precio total.
 
-Finalmente, la activity contara con un boton "Confirmar Pedido" cuya funcionalidad implementaremos en el siguiente punto de esta guia
+Finalmente, la activity contara con un boton "Confirmar Pedido" cuya funcionalidad implementaremos posteriormente
 
-### 2. Confirmar pedido
+### 2. Implementar logica del boton Confirmar pedido usando Async Tasks
+
+El botón "Confirmar Pedido" al ser presionado ejecutara una [Async Task](https://developer.android.com/reference/android/os/AsyncTask) que simulará el guardado del nuevo pedido, para esto la tarea esperará 5 segundos en el background antes de finalizar y enviar un mensaje de broadcast para crear una notificacion de android.
+
+### 3. Implementar un Broadcast Receiver para crear notificaciones
+
+Queremos mostrarle al usuario una notificacion con un texto que muestre que su pedido se ha creado correctamente, para esto primero generarmos un [broadcast](https://developer.android.com/guide/components/broadcasts) receiver que sea el encargado escuchar el aviso de la async task del punto anterior y crear las notificaciones en el dispositivo de manera local. 
+
+Para crear un broadcast necesitamos nuestra propia clase que extienda de la clase abstracta BroadcastReceiver 
+
+```
+public class MyNotificationPublisher extends BroadcastReceiver {
+
+    @Override
+    public void onReceive (Context context , Intent intent) {
+        // Logica para generar la notificación al recibier el broadcast...
+    }
+}
+```
+
+Para generar una notificación podemos apoyarnos en la documentacion de google de [notificaciones](https://developer.android.com/training/notify-user/build-notification#java)
+
+> En las versiones de android desde la 8.0 en adelante es necesario crear un notification channel antes de poder enviar una notificación.
+

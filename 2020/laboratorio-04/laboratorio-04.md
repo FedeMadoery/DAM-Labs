@@ -98,6 +98,8 @@ public class Plato {
 
 Para acceder a los datos de nuestra app utilizando la librería de persistencia room esta nos propone la utilización del patron de objeto de acceso a datos (data access object o DAO), en el que estos objetos nos proveen los métodos para acceder a los objetos de la base de datos.
 
+// TODO Completar 
+
 ## 3. Persistir los pedidos creados en la base de dato SQL.
 
 Repetir los pasos anteriores (2.2 - 2.3) pero ahora configurando la entidad Pedido, para que sea guardada en nuestra base de datos, incluyendo sus relaciones.
@@ -145,8 +147,11 @@ public interface PlatoService {
   @GET("plato/{id}")
   Call<Plato> getPlato(@Path("id") String id);
     
-  @GET("plato/lista")
+  @GET("plato/list")
   Call<List<Plato>> getPlatoList();
+
+  @POST("plato/new")
+  Call<Plato> createPlato(@Body Plato plato);
 }
 ```
 
@@ -166,3 +171,7 @@ Cuando tenemos creado nuestra clase, podemos llamar cualquier endpoint de nuestr
 ```java
 Call<List<Plato>> platos = platoService.getPlatoList();
 ```
+
+## 5. Persistir los pedidos creados a través de una API Rest.
+
+Repetir los pasos anteriores (4.2 - 4.3) pero ahora configurando la entidad PedidoService, para poder hacer uso de la API Rest, para guardar pedidos.

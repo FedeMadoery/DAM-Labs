@@ -150,7 +150,7 @@ public interface PlatoService {
   @GET("plato/list")
   Call<List<Plato>> getPlatoList();
 
-  @POST("plato/new")
+  @POST("plato")
   Call<Plato> createPlato(@Body Plato plato);
 }
 ```
@@ -175,3 +175,14 @@ Call<List<Plato>> platos = platoService.getPlatoList();
 ## 5. Persistir los pedidos creados a través de una API Rest.
 
 Repetir los pasos anteriores (4.2 - 4.3) pero ahora configurando la entidad PedidoService, para poder hacer uso de la API Rest, para guardar pedidos.
+
+##### Recomendación:
+En caso de estar usando el JSON-Server de [SendMeal-FakeAPI](https://github.com/FedeMadoery/SendMeal-FakeAPI), recuerden que la relación `1 a n` de `Pedido -> Platos`, deben guardarla con un arreglo de IDs
+Ej: 
+```
+Pedido = {
+    id: "uuidPedido",
+    platosId: ["uuidPlato1", "uuidPlato2", "uuidPlato3"],
+    ....
+}
+```

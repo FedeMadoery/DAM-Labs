@@ -113,9 +113,152 @@ public interface PlatoDao {
 
     @Query("SELECT * FROM plato WHERE id = :id LIMIT 1")
     Plato buscar(String id);
+
+    @Query("SELECT * FROM plato")
+    List<Plato> buscarTodos();
+
 }
 ```
-// TODO Completar 
+### 2.4 Creación de un Repository
+Una vez que tenemos creados tanto la Entidad, con sus etiquetas, y el DAO; Debemos crear una clase que haga uso de Room y el DAO correspondiente a cada objeto que se desea almacenar.
+
+Como ejemplo vamos a completar el AppRepository con lo necesario para guardar y consultar los platos guardados.
+
+
+```java
+@Database(entities = {Plato.class}, version = 1)
+public abstract class AppDatabase extends RoomDatabase {
+    public abstract PlatoDao platoDao();
+     /* .... */
+    static AppDatabase getInstance(final Context context) {
+        /* .... */
+        return INSTANCE;
+    }
+}
+```
+```java
+public class AppRepository implements OnPlatoResultCallback {
+    private PlatoDao platoDao;
+    private OnResultCallback callback;
+
+    public AppRepository(Application application, OnResultCallback context){
+        AppDatabase db = AppDatabase.getInstance(application);
+        platoDao = db.platoDao();
+        callback = context;
+    }
+
+    public void insertar(final Plato plato){
+        AppDatabase.databaseWriteExecutor.execute(new Runnable() {
+            @Override
+            public void run() {
+                platoDao.insertar(plato);
+            }
+        });
+    }
+
+    public void borrar(final Plato plato){
+        AppDatabase.databaseWriteExecutor.execute(new Runnable() {
+            @Override
+            public void run() {
+                platoDao.borrar(plato);
+            }
+        });
+    }
+
+    public void actualizar(final Plato plato){
+        AppDatabase.databaseWriteExecutor.execute(new Runnable() {
+            @Override
+            public void run() {
+                platoDao.actualizar(plato);
+            }
+        });
+    }
+
+    public void buscar(String id) {
+        new BuscarPlatoById(platoDao, this).execute(id);
+    }
+
+    public void buscarTodos() {
+        new BuscarPlatos(platoDao, this).execute();
+    }
+
+    @Override
+    public void onResult(List<Plato> platos) {
+        Log.d("DEBUG", "Plato found");
+        callback.onResult(platos);
+    }
+
+    public interface OnResultCallback<T> {
+        void onResult(List<T> result);
+    }
+}
+```
+
+> Vale destacar, que cualquier consulta a la base, no debe hacerse sobre el hilo principal de ejecución, por lo tanto y con el objetivo de simplificar la tarea, vamos a hacer uso de AsynkTask y Callbacks.  Lo más recomendado es hacer uso de LiveData o RxJava, pero ambos temas quedan fuera del alcance del laboratorio.
+
+`void buscar(String id)` y `void buscarTodos()` son dos claros ejemplos de funciones que deben ejecutarse en un hilo distinto del principal, ya que hacen una llamada a la base de datos y ademas queremos conocer su resultado, como logramos ambas cosas?
+
+En este caso, lo que vamos a hacer es crear un AsynkTask que ejecute la búsqueda y nos de el resultado cuando la misma haya terminado. Lo cual quedaría de la siguiente forma
+
+```java
+// android.os.AsyncTask<Params, Progress, Result>
+class BuscarPlatos extends AsyncTask<String, Void, List<Plato>> {
+
+    private PlatoDao dao;
+    private OnPlatoResultCallback callback;
+
+    public BuscarPlatos(PlatoDao dao, OnPlatoResultCallback context) {
+        this.dao = dao;
+        this.callback = context;
+    }
+
+    @Override
+    protected List<Plato> doInBackground(String... strings) {
+        List<Plato> platos = dao.buscarTodos();
+        return platos;
+    }
+
+    @Override
+    protected void onPostExecute(List<Plato> platos) {
+        super.onPostExecute(platos);
+        callback.onResult(platos);
+    }
+}
+```
+`BuscarPlatos` en su constructor recibe dos parámetros muy importantes que debemos entender `PlatoDao dao` y `OnPlatoResultCallback context`, el primer parámetro es el DAO que construimos anteriormente, pero el segundo parametro es el contexto desde donde estamos llamando a nuestro Reposity, el cual debe implementar `OnPlatoResultCallback` para ser valido; Al implementar esta interfaz, nos  aseguramos que tendrá declarado el método `onResult` el cual usaremos para notificarle el resultado de la operación.  
+
+La Interfaz de `OnPlatoResultCallback` seria algo como lo siguiente
+
+```java
+interface OnPlatoResultCallback {
+    void onResult(List<Plato> plato);
+}
+```
+> El mismo tipo de interfaz, pero de forma más generica para poder ser usada tanto con Platos como con Pedidos, fue declarada en AppRepository
+
+De la siguiente forma quedaría un Activity que quiere hacer uso del Repository
+ 
+ ```java
+public class ListItemsActivity extends AppCompatActivity implements AppRepository.OnResultCallback {
+    /* ..... */
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+       /* ..... */
+        repository = new AppRepository(this.getApplication(), this);
+        repository.buscarTodos();
+    }
+
+    @Override
+    public void onResult(List result) {
+        // Vamos a obtener una Lista de items como resultado cuando finalize
+        Toast.makeText(ListItemsActivity.this, "Exito!", Toast.LENGTH_SHORT).show();
+    }
+
+}
+```
+De esta forma podemos ejecutar pedidos a la base de datos de forma asíncrona y no consumir los recursos del hilo principal.
+
+###### Aclaración: Este tipo de AsynkTask podría repetirse para cada operación o hacerse de forma más generica. Queda a elección.
 
 ## 3. Persistir los pedidos creados en la base de dato SQL.
 

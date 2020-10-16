@@ -1,7 +1,7 @@
 ![](https://www.frsf.utn.edu.ar/templates/utn17/img/utnsantafe-color.png)
 
 # Trabajo práctico integrador - Laboratorio 4
-> Fecha de entrega para el laboratorio 4: 23 de octubre 2020
+> Fecha de entrega para el laboratorio 4: 30 de octubre 2020
 
 
 ## Objetivos

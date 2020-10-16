@@ -98,6 +98,23 @@ public class Plato {
 
 Para acceder a los datos de nuestra app utilizando la librería de persistencia room esta nos propone la utilización del patron de objeto de acceso a datos (data access object o DAO), en el que estos objetos nos proveen los métodos para acceder a los objetos de la base de datos.
 
+El DAO para la entidad Plato, quedaría de la siguiente forma:
+```java
+@Dao
+public interface PlatoDao {
+    @Insert
+    void insertar(Plato plato);
+
+    @Delete
+    void borrar(Plato plato);
+
+    @Update
+    void actualizar(Plato plato);
+
+    @Query("SELECT * FROM plato WHERE id = :id LIMIT 1")
+    Plato buscar(String id);
+}
+```
 // TODO Completar 
 
 ## 3. Persistir los pedidos creados en la base de dato SQL.

@@ -23,10 +23,10 @@ En este trabajo utilizaremos ambas opciones, localmente guardaremos los datos en
 
 ![](../laboratorio-01/imagenes/6-GithubRepo.png)
 
- A continuación abrir el proyecto en Android Studio y hacer un checkout de la branch develop, esta rama debe contener los cambios realizados durante el [laboratorio 2](../laboratorio-02/laboratorio-02.md). 
+ A continuación abrir el proyecto en Android Studio y hacer un checkout de la branch develop, esta rama debe contener los cambios realizados durante el [laboratorio 3](../laboratorio-03/laboratorio-03.md). 
 
 
-A partir de develop, crear una nueva branch llamada lab03. Esta es la branch sobre la cual se realizará este laboratorio.  
+A partir de develop, crear una nueva branch llamada lab04. Esta es la branch sobre la cual se realizará este laboratorio.  
 
 ### 2. Persistir platos creados en una base de dato SQL
 

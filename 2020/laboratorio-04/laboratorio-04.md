@@ -124,6 +124,17 @@ Utilizando la misma clase plato que teníamos creada y ampliamos en el paso 2, v
 - 4.1.3 Acabamos de agregar referencias a las librerías de Retrofit, por lo que debemos hacer nuevamente un `Sync` 
 
     ![](imagenes/01-GradleSync.png)
+- 4.1.4 Agrear los permisos de red al `AndroidManifest.xml`
+     ```xml
+    <uses-permission android:name="android.permission.INTERNET" />              
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />  
+    ```
+- 4.1.5 Desde el API 28 en adelante, hay que permitir el trafico "cleartext HTTP". Esto es solamente porque usaremos un API-Rest local 
+    ```xml
+      <application
+        ....
+        android:usesCleartextTraffic="true"
+   ```
    
 ### 4.2 Generar la interfaz que va a describir a nuestra API
 
@@ -157,10 +168,11 @@ public interface PlatoService {
 
 Una vez tenemos totalmente declarados todos los metodos de nuestra API Rest, podemos inicializar una instancia de nuestra API como si fuera una Clase Java haciendo uso de `Retrofit`
 ```java
+Gson gson = new GsonBuilder().setLenient().create();
 Retrofit retrofit = new Retrofit.Builder()
-    .baseUrl("{urlApiRest}")
+    .baseUrl("{urlApiRest}/")
     // En la siguiente linea, le especificamos a Retrofit que tiene que usar Gson para deserializar nuestros objetos
-    .addConverterFactory(GsonConverterFactory.create()) 
+    .addConverterFactory(GsonConverterFactory.create(gson)) 
     .build();
 
 PlatoService platoService = retrofit.create(PlatoService.class);
@@ -169,7 +181,23 @@ PlatoService platoService = retrofit.create(PlatoService.class);
 Cuando tenemos creado nuestra clase, podemos llamar cualquier endpoint de nuestra API Rest, como si fuera un metodo.
 
 ```java
-Call<List<Plato>> platos = platoService.getPlatoList();
+Call<List<Plato>> callPlatos = platoService.getPlatoList();
+
+callPlatos.enqueue(
+        new Callback<List<Plato>>() {
+            @Override
+            public void onResponse(Call<List<Plato>> call, Response<List<Plato>> response) {
+                if (response.code() == 200) {
+                    Log.d("DEBUG", "Returno Exitoso");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Plato>> call, Throwable t) {
+                Log.d("DEBUG", "Returno Fallido");
+            }
+        }
+);
 ```
 
 ## 5. Persistir los pedidos creados a través de una API Rest.
@@ -186,3 +214,16 @@ Pedido = {
     ....
 }
 ```
+Al momento de consultar un pedido por ID, o una lista de pedidos; El API automáticamente mapeara los platos relacionados con el pedidos.
+Ej:
+```
+Pedido = {
+    id: "uuidPedido",
+    platosId: ["uuidPlato1", "uuidPlato2", "uuidPlato3"],
+    platos: [ {objPlato1}, {objPlato2}, {objPlato3} ]
+    ....
+}
+```
+
+Tambien deben recordar, que Android no permite conexiones a 'localhost', por lo que deben buscar la ip de su equipo y usar esa dirección. 
+Ej: `http://192.168.16.1:3001/`

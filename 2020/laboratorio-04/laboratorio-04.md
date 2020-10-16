@@ -8,7 +8,6 @@
 - Persistir datos de nuestras aplicaciones mobile (online y offline)
 - Utilizar ROOM para lograr la persistencia en el device
 - Utilizar Retrofit para persistir datos online usando APIs REST
-- Familiarizarnos con firebase como herramienta de backend enlatado
 
 
 ## Intro

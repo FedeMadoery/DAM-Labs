@@ -117,7 +117,7 @@ Utilizando la misma clase plato que teníamos creada y ampliamos en el paso 2, v
         // <Acá están las demás dependencias de la app, no las borres>
         // Agregamos Retrofit components
             implementation 'com.squareup.retrofit2:retrofit:2.9.0'
-            implementation 'com.squareup.retrofit2:converter-gson'
+            implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
         }
     ```
     > Al momento de escribir esta guiá la version más reciente de retrofit es la `2.9.0`. Siempre pueden consultar la ultima version en el [Github de Retrofit](https://github.com/square/retrofit/tags)

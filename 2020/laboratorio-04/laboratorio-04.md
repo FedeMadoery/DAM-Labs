@@ -394,4 +394,4 @@ Pedido = {
 ```
 
 Tambien deben recordar, que Android no permite conexiones a 'localhost', por lo que deben buscar la ip de su equipo y usar esa dirección. 
-Ej: `http://192.168.16.1:3001/`
+Ej: `http://192.168.16.1:3001/` o usando la "IP Magica" `http://10.0.2.2/`

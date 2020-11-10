@@ -255,8 +255,33 @@ dicho path lo vamos a almacenar en el objeto Plato que ya teníamos de los labor
 
 Para lograr esto, debemos hacer un Intent para obtener una imagen, ya sea desde la cámara o desde los archivos
 ```java
-// TODO Intent a camara
+public class SomeActivity {
+    static final int REQUEST_IMAGE_CAPTURE = 1;
+    
+    private void dispatchTakePictureIntent() {
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        try {
+            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+        } catch (ActivityNotFoundException e) {
+            // Error al intentar hacer el intent
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+            Bundle extras = data.getExtras();
+            Bitmap imageBitmap = (Bitmap) extras.get("data");
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            imageBitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+            byte[] data = baos.toByteArray(); // Imagen en arreglo de bytes
+        }
+    }
+
+}
 ```
+Recordar que debemos pedir los permisos necesarios, en este caso `IMAGE_CAPTURE`.
+
 Una vez que tenemos nuestra imagen, vamos a subirla al Storage
 
 ```java
@@ -281,7 +306,7 @@ public class SomeActivity {
     // Función donde vamos a guardar la imagen
     private void someFunction() {
 
-        // Cual quiera de los tres metodos tienen la misma implementación, se debe utilizar el que corresponda
+        // Cual quiera de los tres métodos tienen la misma implementación, se debe utilizar el que corresponda
         UploadTask uploadTask = platosImagesRef.putBytes(data);
         // UploadTask uploadTask = platosImagesRef.putFile(file);
         // UploadTask uploadTask = platosImagesRef.putStream(stream);
@@ -317,6 +342,12 @@ y mostrarla.
 
 ### 10. Descargar archivos de Cloud Storage
 
+Ahora que nuestros platos tienen una imagen guardada, lo que vamos a hacer es utilizarla en la preview, para esto debemos 
+descargar la imagen y colocarla en el `imageView` que ya teníamos anteriormente en la lista de platos.
+
+Para esto lo que debemos hacer es tomar la dirección a la imagen, el path, que persistimos en nuestro objeto Plato y crear
+una referencia a Firebase Storage, luego con el método `getBytes()` podremos obtener lo que almacenamos previamente.
+
 ```java
 public class SomeActivity {
     // ... 
@@ -325,7 +356,28 @@ public class SomeActivity {
         // Creamos una referencia al storage con la Uri de la img
         StorageReference gsReference = storage.getReferenceFromUrl("gs://bucket/images/something.jpg");
         
-        // TODO codigo para descargar
+        final long THREE_MEGABYTE = 3 * 1024 * 1024;
+        gsReference.getBytes(THREE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+            @Override
+            public void onSuccess(byte[] bytes) {
+                // Exito
+                Bitmap bm = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                DisplayMetrics dm = new DisplayMetrics();
+                getWindowManager().getDefaultDisplay().getMetrics(dm);
+    
+                imageView.setMinimumHeight(dm.heightPixels);
+                imageView.setMinimumWidth(dm.widthPixels);
+                imageView.setImageBitmap(bm);
+           }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                // Error - Cargar una imagen por defecto
+            }
+        });
     }
 }
 ```
+> Descarga el archivo a un `byte[]` con el método `getBytes()`. Es la forma más fácil de descargar un archivo, pero requiere 
+>cargar todo su contenido en la memoria. Si solicitas un archivo más grande que la memoria disponible, fallará. Por lo 
+>tanto `getBytes()`, necesita el tamaño máximo con un valor que sepas que la app pueda controlar.

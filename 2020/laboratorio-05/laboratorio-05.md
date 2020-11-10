@@ -13,8 +13,6 @@
 - Utilizar Notificaciones Push
 
 # Intro
-En este momento
-
 
 ### 1. Clonar el proyecto realizado en el laboratorio anterior
 
@@ -32,13 +30,15 @@ A partir de develop, crear una nueva branch llamada lab05. Esta es la branch sob
  * 2.1 - Con un usuario de google (uno por grupo), ingresar a [Consola de Google](https://console.developers.google.com)
  * 2.2 - Ingresar a [Administra recursos](https://console.developers.google.com/iam-admin/projects)
  * 2.3 - Crear un nuevo proyecto
- ![](../laboratorio-05/imagenes/01_nuevo_proyect.png)
+
+    ![](../laboratorio-05/imagenes/01_nuevo_proyect.png)
  * 2.4 - En el menu lateral, ingresar a 'Credenciales' -> '+ Crear Credenciales' -> 'Clave de API' -> 'Restringir'
  * 2.5 - Restricciones de aplicaciones
     * Apps de Android
  * 2.6 - Restricciones de API
     * Maps SDK for Android
-  ![](../laboratorio-05/imagenes/02_restringir_key.png)
+
+        ![](../laboratorio-05/imagenes/02_restringir_key.png)
  * 2.7 - Copiar y guardar el API Key
  
 Una vez que tenemos nuestra API key, debemos agregarla al `manifest.xml` para que pueda ser usada.
@@ -94,13 +94,13 @@ Ahora solo resta modificar el Layout agregando un fragmento para el mapa
 Al momento de realizar un pedido, se debe agregar la opción de seleccionar la ubicación a la cual se va a enviar el pedido.
 Para esto debemos agregar un método que nos permita obtener la ubicación al momento de realizar el pedido, en dicho método
 implementar el llamado a la actividad definida anteriormente mediante `startActivityForResult` pasando como parámetro la
-ubicación LatLng donde el usuario hizo click en el mapa. Para tomar la ubicación usar `OnMapLongClickListener`.
+ubicación [LatLng](https://developers.google.com/android/reference/com/google/android/gms/maps/model/LatLng) donde el usuario hizo click en el mapa. Para tomar la ubicación usar `OnMapLongClickListener`.
 
 Al momento de abrir el mapa se debe ir a donde esta posicionado, por lo que debe solicitar el permiso `ACCESS_FINE_LOCATION`
-(recuerde que a partir de Android 6 debe solicitarlo en tiempo de ejecución. Luego cuando el mapa carga indicar 
+(recuerde que a partir de Android 6 debe [solicitarlo en tiempo de ejecución](https://developers.google.com/maps/documentation/android-sdk/location?hl=es-419#request_runtime_permissions). Luego cuando el mapa carga indicar 
 `setMyLocationEnabled(true)` y aparecerá la posibilidad de ir a las coordenadas actuales. 
 
-_Recordar modificar la entidad Pedido para contener el atributo Ubicación._
+> _Recordar modificar la entidad Pedido para contener el atributo Ubicación._
 
 ### 5. Indicar la ubicación del local
 
@@ -121,7 +121,25 @@ dependencies {
 }
 ```
 
-// TODO Agregar ejemplo de uso
+Podemos utilizar el metodo `computeOffset` para generar nuestro punto aleatorio de la siguiente manera:
+
+``` java 
+Random r = new Random();
+
+// Una direccion aleatoria de 0 a 359 grados
+int direccionRandomEnGrados = r.nextInt(360);
+
+// Una distancia aleatoria de 100 a 1000 metros 
+int distanciaMinima = 100;
+int distanciaMaxima = 1000;
+int distanciaRandomEnMetros = r.nextInt(distanciaMaxima - distanciaMinima) + distanciaMinima;
+
+LatLng nuevaPosicion = SphericalUtil.computeOffset(
+    posicionOriginal,
+    distanciaRandomEnMetros,
+    direccionRandomEnGrados
+);
+```
 
 Usar la Latlng generada para crear un marcador en el mapa.
 

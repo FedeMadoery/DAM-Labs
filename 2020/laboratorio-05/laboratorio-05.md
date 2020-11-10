@@ -272,8 +272,20 @@ lo almacenaran en Cloud Storage; Esta operación nos retornara un "path", que es
 dicho path lo vamos a almacenar en el objeto Plato que ya teníamos de los laboratorios anteriores.
 
 Para lograr esto, debemos hacer un Intent para obtener una imagen, ya sea desde la cámara o desde los archivos
+
 ```java
-// TODO Intent a camara
+static final int CAMARA_REQUEST = 1;
+static final int GALERIA_REQUEST = 2;
+
+private void lanzarCamara() {
+    Intent camaraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+    startActivityForResult(camaraIntent, CAMARA_REQUEST);
+}
+
+private void abrirGaleria() {
+    Intent galeriaIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
+    startActivityForResult(galeriaIntent, GALERIA_REQUEST);
+}
 ```
 Una vez que tenemos nuestra imagen, vamos a subirla al Storage
 

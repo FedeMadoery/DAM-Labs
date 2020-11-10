@@ -94,13 +94,13 @@ Ahora solo resta modificar el Layout agregando un fragmento para el mapa
 Al momento de realizar un pedido, se debe agregar la opción de seleccionar la ubicación a la cual se va a enviar el pedido.
 Para esto debemos agregar un método que nos permita obtener la ubicación al momento de realizar el pedido, en dicho método
 implementar el llamado a la actividad definida anteriormente mediante `startActivityForResult` pasando como parámetro la
-ubicación LatLng donde el usuario hizo click en el mapa. Para tomar la ubicación usar `OnMapLongClickListener`.
+ubicación [LatLng](https://developers.google.com/android/reference/com/google/android/gms/maps/model/LatLng) donde el usuario hizo click en el mapa. Para tomar la ubicación usar `OnMapLongClickListener`.
 
 Al momento de abrir el mapa se debe ir a donde esta posicionado, por lo que debe solicitar el permiso `ACCESS_FINE_LOCATION`
-(recuerde que a partir de Android 6 debe solicitarlo en tiempo de ejecución. Luego cuando el mapa carga indicar 
+(recuerde que a partir de Android 6 debe [solicitarlo en tiempo de ejecución](https://developers.google.com/maps/documentation/android-sdk/location?hl=es-419#request_runtime_permissions). Luego cuando el mapa carga indicar 
 `setMyLocationEnabled(true)` y aparecerá la posibilidad de ir a las coordenadas actuales. 
 
-_Recordar modificar la entidad Pedido para contener el atributo Ubicación._
+> _Recordar modificar la entidad Pedido para contener el atributo Ubicación._
 
 ### 5. Indicar la ubicación del local
 
@@ -121,7 +121,25 @@ dependencies {
 }
 ```
 
-// TODO Agregar ejemplo de uso
+Podemos utilizar el metodo `computeOffset` para generar nuestro punto aleatorio de la siguiente manera:
+
+``` java 
+Random r = new Random();
+
+// Una direccion aleatoria de 0 a 359 grados
+int direccionRandomEnGrados = r.nextInt(360);
+
+// Una distancia aleatoria de 100 a 1000 metros 
+int distanciaMinima = 100;
+int distanciaMaxima = 1000;
+int distanciaRandomEnMetros = r.nextInt(distanciaMaxima - distanciaMinima) + distanciaMinima;
+
+LatLng nuevaPosicion = SphericalUtil.computeOffset(
+    posicionOriginal,
+    distanciaRandomEnMetros,
+    direccionRandomEnGrados
+);
+```
 
 Usar la Latlng generada para crear un marcador en el mapa.
 
@@ -254,30 +272,32 @@ lo almacenaran en Cloud Storage; Esta operación nos retornara un "path", que es
 dicho path lo vamos a almacenar en el objeto Plato que ya teníamos de los laboratorios anteriores.
 
 Para lograr esto, debemos hacer un Intent para obtener una imagen, ya sea desde la cámara o desde los archivos
+
 ```java
 public class SomeActivity {
-    static final int REQUEST_IMAGE_CAPTURE = 1;
+    static final int CAMARA_REQUEST = 1;
+    static final int GALERIA_REQUEST = 2;
     
-    private void dispatchTakePictureIntent() {
-        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        try {
-            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
-        } catch (ActivityNotFoundException e) {
-            // Error al intentar hacer el intent
-        }
+    private void lanzarCamara() {
+        Intent camaraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        startActivityForResult(camaraIntent, CAMARA_REQUEST);
     }
-
+    
+    private void abrirGaleria() {
+        Intent galeriaIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
+        startActivityForResult(galeriaIntent, GALERIA_REQUEST);
+    }
+    
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
-            Bundle extras = data.getExtras();
-            Bitmap imageBitmap = (Bitmap) extras.get("data");
-            ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            imageBitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
-            byte[] data = baos.toByteArray(); // Imagen en arreglo de bytes
+        protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+            if ((requestCode == CAMARA_REQUEST ||  requestCode == GALERIA_REQUEST) && resultCode == RESULT_OK) {
+                Bundle extras = data.getExtras();
+                Bitmap imageBitmap = (Bitmap) extras.get("data");
+                ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                imageBitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+                byte[] data = baos.toByteArray(); // Imagen en arreglo de bytes
+            }
         }
-    }
-
 }
 ```
 Recordar que debemos pedir los permisos necesarios, en este caso `IMAGE_CAPTURE`.

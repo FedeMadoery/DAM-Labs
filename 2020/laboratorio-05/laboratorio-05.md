@@ -401,3 +401,131 @@ public class SomeActivity {
 > Descarga el archivo a un `byte[]` con el método `getBytes()`. Es la forma más fácil de descargar un archivo, pero requiere 
 >cargar todo su contenido en la memoria. Si solicitas un archivo más grande que la memoria disponible, fallará. Por lo 
 >tanto `getBytes()`, necesita el tamaño máximo con un valor que sepas que la app pueda controlar.
+
+### 11. Recibir Notificaciones Push
+Para recibir notificaciones push, lo que vamos a hacer es configurar el servicio de Firebase Cloud Messaging, que nos va
+a permitir recibir mensajes de firebase y realizar una acción en consecuencia, la cual puede variar dependiendo del tipo
+o el contenido del mensaje, en este caso el comportamiento va a ser siempre el mismo y es mostrar una notificación que diga
+_'Tu pedido ha sido confirmado por el local.'_
+ 
+Para esto, lo primero que vamos a hacer es agregar las dependencias que necesitamos para nuevo modulo:
+
+```
+dependencies {
+    // ...
+    implementation 'com.google.firebase:firebase-messaging'
+    implementation 'com.google.firebase:firebase-analytics'
+    implementation 'com.google.firebase:firebase-messaging-directboot:20.2.0'
+
+}
+```
+
+Una vez que tenemos las nuevas dependencias, vamos a tener que agregar el siguiente código al `manifest.xml`
+
+```xml
+<service
+    android:name=".java.MyFirebaseMessagingService"
+    android:directBootAware="true"
+    android:exported="false">
+    <intent-filter>
+        <action android:name="com.google.firebase.MESSAGING_EVENT" />
+    </intent-filter>
+</service>
+```
+
+Lo que hace este código, es registrar un servicio llamado `MyFirebaseMessagingService`, que va a ser quien escuche la llegada de nuestras notificaciones.
+
+> Si desean cambiar el icono de la notificacion y/o el color, pueden hacerlo como indica el 2do item [aquí](https://firebase.google.com/docs/cloud-messaging/android/client?hl=es#manifest)
+
+Ahora, vamos a crear nuestro servicio `MyFirebaseMessagingService`
+
+```java
+public class MyFirebaseMessagingService extends FirebaseMessagingService {
+
+    @Override
+    public void onMessageReceived(RemoteMessage remoteMessage) {
+        // ...
+        Log.d(TAG, "From: " + remoteMessage.getFrom());
+  
+        // Pueden validar si el mensaje trae datos
+        if (remoteMessage.getData().size() > 0) {
+            Log.d(TAG, "Payload del mensaje: " + remoteMessage.getData());
+            // Realizar alguna acción en consecuencia
+        }
+        // Pueden validar si el mensaje trae una notificación
+        if (remoteMessage.getNotification() != null) {
+            Log.d(TAG, "Cuerpo de la notificación del mensaje: " + remoteMessage.getNotification().getBody());
+            // También pueden usar:
+            // remoteMessage.getNotification().getTitle()
+        }
+       // Cualquier otra acción que quieran realizar al recibir un mensaje de firebase, la pueden realizar aca
+       // EJ:        
+       sendNotification('Cuerpo de la notificacion');
+    }
+
+    // Función para crear una notificación (completar)
+    private void sendNotification(String messageBody) {
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        // PendingIntent pendingIntent = ....
+
+        //NotificationCompat.Builder notificationBuilder =
+        //        new NotificationCompat.Builder(this, channelId)
+        //                          ....
+        //               .setContentIntent(pendingIntent);
+
+        NotificationManager notificationManager =
+                (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+        //    NotificationChannel channel = new NotificationChannel(....);
+            notificationManager.createNotificationChannel(channel);
+        }
+
+        notificationManager.notify(0 /* ID notificación */, notificationBuilder.build());
+    }
+
+}
+```
+
+Una vez que tenemos esto en nuestra aplicación, esta lista para recibir mensajes de FCM y crear una notificación con el 
+mismo.
+
+Para poder probarlo, lo unico que nos falta es obtener el token que referencia a nuestro dispositivo en FCM, para esto
+vamos a usar el siguiente codigo:
+
+```java
+FirebaseMessaging.getInstance().getToken()
+    .addOnCompleteListener(new OnCompleteListener<String>() {
+        @Override
+        public void onComplete(@NonNull Task<String> task) {
+          if (!task.isSuccessful()) {
+            // Error
+            return;
+          }
+
+          // FCM token
+          String token = task.getResult();
+
+          // Imprimirlo en un toast y en logs
+          Log.d('[FCM - TOKEN]', token);
+          Toast.makeText(MainActivity.this, token, Toast.LENGTH_SHORT).show();
+        }
+    });
+```
+
+Ahora, una ves que tenemos nuestro token, vamos a ir a la consola de firebase [aquí](https://console.firebase.google.com/project/bar-sells-poc/notification?hl=es)
+
+![](../laboratorio-05/imagenes/09_firebase_cm.jpg)
+
+Vamos a 'Enviar tu primer mensaje' y nos va a mostrar un formulario con los campos que podemos enviar.
+
+![](../laboratorio-05/imagenes/10_enviar_mensaje.png)
+
+Luego va a requerir el token que tomamos de los logs
+
+![](../laboratorio-05/imagenes/11_ingresar_token.png)
+
+Una vez la hayan enviado, van a poder ver el estado de esta y otras notificaciones que hayan creado desde la web de Firebase.
+
+![](../laboratorio-05/imagenes/12_ver_envios.png)

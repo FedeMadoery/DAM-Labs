@@ -23,11 +23,11 @@ Como vs code realmente es un editor de texto para multiples lenguajes y framewor
 
 Para esto nos dirigimos a la pestaña de extensiones en el menu izquierdo de la herramienta
 
-![](imagenes/7-vscodeextensions.png)
+![](imagenes/7-vscodeextensions.PNG)
 
 En la barra de busqueda tipeamos `React native tools` y seleccionaremos la opcion `install` a la extension publicada por Microsoft
 
-![](imagenes/8-vscodereactnativetools.png)
+![](imagenes/8-vscodereactnativetools.PNG)
 
 ### Instalando Webstorm [OPCIONAL: alternativa a vs code]
 Como alternativ a VS Code y en caso de contar con las cuentas educativas de la facutad, también podemos obtener una licencia para  Webstorm, el ide de javascript de jetbrains.
@@ -104,7 +104,7 @@ Desde dentro de la shell administrador de CMD ejecutar el comando
 
 Luego comenzara la instalación de Chocolatey, la cual puede demorar unos minutos
 
-![](imagenes/10-chocolateyinstalled.png)
+![](imagenes/10-chocolateyinstalled.PNG)
 
 Cuando finalice la instalación será necesario cerrar las ventanas de CMD actualmente abiertas. Luego, al reabrirlas ya tendremos disponibles el comando `choco` para realizar la instalación de paquetes.
 
@@ -151,11 +151,11 @@ Buscar en el menu de windows la opcion `Editar las variables de entorno` o `Edit
 
 ![](imagenes/11-environment.png)
 
-![](imagenes/12-environmentbutton.png)
+![](imagenes/12-environmentbutton.PNG)
 
 Apretamos `New` en la opcion de user variables 
 
-![](imagenes/13-uservariables.png)
+![](imagenes/13-uservariables.PNG)
 
 Agregamos la variables `ANDROID_HOME` con los valores
 
@@ -169,7 +169,7 @@ Variable Value
 %LOCALAPPDATA%\Android\Sdk
 ```
 
-![](imagenes/14-androidhome.png)
+![](imagenes/14-androidhome.PNG)
 
 Luego presionamos `OK` y deberiamos ver nuestra nueva variable agregada
 
@@ -177,16 +177,16 @@ Finalmente, es necesario agregar `platform-tools` a la variable `Path` que ya de
 
 Para esto la buscamos y seleccionamos `Edit`
 
-![](imagenes/14-path.png)
+![](imagenes/14-path.PNG)
 
-![](imagenes/15-pathnew.png)
+![](imagenes/15-pathnew.PNG)
 
 Y agregamos la dirección 
 ```
 %LOCALAPPDATA%\Android\Sdk\platform-tools
 ```
 
-![](imagenes/16-pathnewwindowsplsstop.png)
+![](imagenes/16-pathnewwindowsplsstop.PNG)
 
 Finalmente presionamos `OK`
 

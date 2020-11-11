@@ -197,7 +197,7 @@ Si queres comprobar que todo funcione correctamente podes crear un proyecto de r
 npx react-native init MiProyectoCopado
 ```
 
-En caso de haber tenido problemas durante la instalación dejanos una pregunta en Teams o por correo o la guia de react-native en (https://reactnative.dev/docs/environment-setup)[https://reactnative.dev/docs/environment-setup]
+En caso de haber tenido problemas durante la instalación dejanos una pregunta en Teams o por correo o la guia de react-native en [https://reactnative.dev/docs/environment-setup](https://reactnative.dev/docs/environment-setup)
 
 
 

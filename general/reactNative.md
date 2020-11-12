@@ -173,7 +173,7 @@ Variable Value
 
 Luego presionamos `OK` y deberiamos ver nuestra nueva variable agregada
 
-Finalmente, es necesario agregar `platform-tools` a la variable `Path` que ya deberia existir entre nuestras variables de usuario (Si no existe crearla)
+Ademas, es necesario agregar `platform-tools` a la variable `Path` que ya deberia existir entre nuestras variables de usuario (Si no existe crearla)
 
 Para esto la buscamos y seleccionamos `Edit`
 
@@ -183,22 +183,81 @@ Para esto la buscamos y seleccionamos `Edit`
 
 Y agregamos la dirección 
 ```
-%LOCALAPPDATA%\Android\Sdk\platform-tools
+C:\Users\Aca-va-tu-user-de-windows\AppData\Local\Android\sdk\platform-tools
 ```
 
 ![](imagenes/16-pathnewwindowsplsstop.PNG)
 
-Finalmente presionamos `OK`
+Finalmente, tambien es necesario agregar `emulator` a la variable `Path` para poder ejecutar comandos de consola para abrir el emulador sin necesidad de abrir Android Studio
+
+De la misma manera que agregamos `platform-tools` agregaremos una entrada a la variable `Path` que sea
+```
+C:\Users\Aca-va-tu-user-de-windows\AppData\Local\Android\sdk\emulator
+```
+
+Esto nos permitira utilizar `emulator` para poder ejecutar comandos de consola para abrir el emulador sin necesidad de abrir Android Studio
+
+> Algunos programas solo toman las actualizaciones de variables de entorno durante el arranque, la forma mas sencilla de asegurarse que tome estos cambios es reiniciando
 
 ## 4 - Probando que todo funcione! 
 
 Si queres comprobar que todo funcione correctamente podes crear un proyecto de react-native de prueba con: 
 ```
-npx react-native init MiProyectoCopado
+npx react-native init MiNombreDeProyecto
 ```
+
+Luego de finalizar, este comando nos habrá generado una carpeta con el nombre `mi_nombre_de_proyecto`, la abrimos con nuestro editor/ide y veremos algo similar a esto
+
+![](imagenes/vscode.PNG)
+
+Desde visual studio code la mayoria de las acciones se realizan desde una terminal. Para abir una terminal es necesario dirigirse `Terminal` -> `New Terminal`
+
+![](imagenes/vscodeterminal.png)
+
+Esto nos abrira una terminal (CMD, Powershel o bash segun corresponda) embebida en la ventana del editor.
+
+Para listar nuestros emuladores creados podemos ejecutar
+
+```
+emulator -list-avds
+```
+
+![](imagenes/vscodeterminalemulators.PNG)
+
+Luego de la lista de respuestas podemos iniciar uno ejecutando
+
+```
+emulator -avd [adv-name]
+```
+
+![](imagenes/vscodeterminalemulatopen.PNG)
+
+Luego de tener nuestro emulador corriendo es tiempo de ejecutar nuestra aplicacion de react native, para esto presionaremos el boton `[+]` arriba a la derecha para crear una nueva terminal y ejecutaremos 
+
+```
+npx react-native run-android
+```
+
+![](imagenes/vscodereactnative.PNG)
+
+Ya tenemos nuestro entorno listo para desarrollar, el codigo de la app que estamos viendo se encuentra en `App.js`, si lo abrimos podemos ver como se generan los elementos de la pantalla. Ademas, podemos editar el contenido, guardar y ver los cambios reflejados casi instantaneamente 
+
+![](imagenes/reactnative.png)
+
+> Nota: Esta feature la pueden encontrar con el nombre de `HotReload` y es de gran utilidad durante el desarrollo. Si bien algunos cambios requieren que relanzemos la app para que se re-instale en el disposivo (generalmente cuando instalamos paquetes o agregamos archivos nuevos). 
+Utilizando `HotReload` uno puede probar sus cambios visuales muy repidamente.
+
+## 5 - Problemas
 
 En caso de haber tenido problemas durante la instalación dejanos una pregunta en Teams o por correo o la guia de react-native en [https://reactnative.dev/docs/environment-setup](https://reactnative.dev/docs/environment-setup)
 
+### Failed to install the APP
+
+A veces durante la primera ejecución de nuestra app al lanzar el comando de `npx react-native run-android` podemos ver un error como el siguiente
+
+![](imagenes/21-failedToInstall.PNG)
+
+Esto suele solucionarse abriendo la carpeta `android` de nuestro proyecto React Native desde Android Studio. Esta carpeta contiene los componentes nativos de nuestra aplicacion para que pueda ejecutarse en celulares android y al abrirlo le automaticamente Android Studio hace un sync del proyecto que suele solucionar el problema.
 
 
 

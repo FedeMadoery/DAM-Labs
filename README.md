@@ -16,6 +16,8 @@
 - [Cursado 2020](2020/2020.md)
 
 ## Recursos
+* Configurar entorno React Native - [link](general/reactNative.md)
+
 * Configurar entorno instalando Android Studio - [link](general/androidStudio.md)
 
 * Introduccion a GIT - [link](general/git.md)

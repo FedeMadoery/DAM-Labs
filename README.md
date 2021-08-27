@@ -2,8 +2,6 @@
 
 # Diseño de Aplicaciones Moviles
 
-> TODO: Descripción de la materia
-
 ## Contacto
 
 - **Martín Dominguez** _( Docente )_ - [Correo](mailto:mdomingu@gmail.com)

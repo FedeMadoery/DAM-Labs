@@ -14,6 +14,7 @@
 ## Años de cursado
 
 - [Cursado 2020](2020/2020.md)
+- [Cursado 2021](2021/2021.md)
 
 ## Recursos
 * Configurar entorno React Native - [link](general/reactNative.md)

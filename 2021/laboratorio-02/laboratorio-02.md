@@ -50,9 +50,10 @@ implementation 'androidx.cardview:cardview:1.0.0'
 #### Lista de categorias
 <details>
 <summary>Expandir</summary>
-<p>
-```json
-  {
+<div class="highlight">
+<pre class="highlight">
+<code>
+{
     "id": "MLA5725",
     "name": "Accesorios para Vehículos"
   },
@@ -180,8 +181,8 @@ implementation 'androidx.cardview:cardview:1.0.0'
     "id": "MLA1953",
     "name": "Otras categorías"
   }
-```
-</p>
+</code></pre></div>>
+
 </details>
 
 ### 3. Utilizar la nueva actividad

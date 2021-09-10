@@ -23,7 +23,7 @@ A partir de develop, crear una nueva branch llamada lab02. Esta es la branch sob
 
 Consultar el tutorial presentado en el taller 1 ante cualquier duda. 
 
-### 2. Crear una actividad para listar los categorias.
+### 2. Crear una actividad para listar las categorias.
 
 Crear una actividad que permita visualizar la lista de categorias que se le pueden asignar a un producto.
 
@@ -50,7 +50,7 @@ implementation 'androidx.cardview:cardview:1.0.0'
 #### Lista de categorias
 <details>
 <summary>Expandir</summary>
-
+<p>
 ```json
   {
     "id": "MLA5725",
@@ -181,6 +181,7 @@ implementation 'androidx.cardview:cardview:1.0.0'
     "name": "Otras categorías"
   }
 ```
+</p>
 </details>
 
 ### 3. Utilizar la nueva actividad

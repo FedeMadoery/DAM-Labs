@@ -1,6 +1,6 @@
 ![](https://www.frsf.utn.edu.ar/templates/utn17/img/utnsantafe-color.png)
 
-# Trabajo Practico Integrador 2 - Etapa 1
+# Trabajo Practico 2 - Etapa 1
 > Laboratorio 3
 >
 > Presentado: _Viernes 15 de Octubre 2021_

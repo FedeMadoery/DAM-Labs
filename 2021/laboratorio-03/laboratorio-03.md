@@ -42,8 +42,8 @@ En la aplicación utilizaremos un drawer que se mostrará en la pantalla de list
 4. Asegurarnos que nuestras Activities se extienden desde AppCompatActivity para evitar comportamientos extraños.
 Asegurarnos que nuestros themes extiendan de uno de los themes de material componentes. 
 
-    Para hacer esto, en el archivo themes.xml que nos auto generó android studio podemos modificar el parent reemplazando Theme.AppCompat.x.x por alguno de los siguientes:
-    - Theme.MaterialComponents
+   Para hacer esto, en el archivo themes.xml que nos auto generó android studio podemos modificar el parent reemplazando Theme.AppCompat.x.x por alguno de los siguientes:
+	- Theme.MaterialComponents
     - Theme.MaterialComponents.NoActionBar
     - Theme.MaterialComponents.Light
     - Theme.MaterialComponents.Light.NoActionBar

@@ -1,0 +1,181 @@
+{
+	"info": {
+		"_postman_id": "956ba2f0-2324-40f4-ba25-36a8f1fbf717",
+		"name": "dam-recordatorio-rest",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "deleteRecordatorio",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "{{SYSACAD_PASS}}",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "{{SYSACAD_LEGAJO}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"id\": 7\n}\n ",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://recordatorio-api.duckdns.org/recordatorio",
+					"protocol": "https",
+					"host": [
+						"recordatorio-api",
+						"duckdns",
+						"org"
+					],
+					"path": [
+						"recordatorio"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getRecordatorios",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "{{SYSACAD_PASS}}",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "{{SYSACAD_LEGAJO}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://recordatorio-api.duckdns.org/recordatorio",
+					"protocol": "https",
+					"host": [
+						"recordatorio-api",
+						"duckdns",
+						"org"
+					],
+					"path": [
+						"recordatorio"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "postRecordatorios",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "{{SYSACAD_PASS}}",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "{{SYSACAD_LEGAJO}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"texto\": \"prueba1\",\n    \"fecha\": \"2021-11-10T15:00:00.000Z\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://recordatorio-api.duckdns.org/recordatorio",
+					"protocol": "https",
+					"host": [
+						"recordatorio-api",
+						"duckdns",
+						"org"
+					],
+					"path": [
+						"recordatorio"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "sysacadApiLogin",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "{{SYSACAD_PASS}}",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "{{SYSACAD_LEGAJO}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://sysacad-api.herokuapp.com/login",
+					"protocol": "https",
+					"host": [
+						"sysacad-api",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "server-ip",
+			"value": "209.50.49.38"
+		},
+		{
+			"key": "server-port",
+			"value": "1337"
+		},
+		{
+			"key": "TOKEN",
+			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjM2MDgyOTE3LCJleHAiOjE2Mzg2NzQ5MTd9.vGjXlntBXVLJEoW5sfbny_-nGhltuisQAm0HNdemXMo"
+		}
+	]
+}

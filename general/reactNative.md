@@ -115,7 +115,7 @@ choco -v
 
 Luego para realizar la instalación de Node y OpenJDk solo es necesario ejecutar
 ```
-choco install -y nodejs.install openjdk8
+choco install -y nodejs-lts openjdk8
 ```
 > Recordar que debe ejecutarse CMD como administrador o lanzará error.
 
@@ -259,8 +259,27 @@ A veces durante la primera ejecución de nuestra app al lanzar el comando de `np
 
 Esto suele solucionarse abriendo la carpeta `android` de nuestro proyecto React Native desde Android Studio. Esta carpeta contiene los componentes nativos de nuestra aplicacion para que pueda ejecutarse en celulares android y al abrirlo le automaticamente Android Studio hace un sync del proyecto que suele solucionar el problema.
 
+### TypeError: Cannot read properties of undefined (reading 'transformFile')
 
+![](./imagenes/react-native-error.png)
 
+Este error suele estar relacionado con la version 17 de node (o alguna otra current), para comprobarlo podés tirar en una terminal
+
+```bash
+$ node --version
+```
+
+Si la versión es es una de esa podés probar desinstalarla y reinstalar una versión lts.
+
+Luego eliminar la carpeta `node_modules`, el archivo `package_json.lock` y volver a ejecutar `npm i`
+
+#### Windows
+
+```bash
+$ choco uninstall nodejs
+
+$ choco install nodejs-lts
+```
 
 
 

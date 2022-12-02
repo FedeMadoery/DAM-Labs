@@ -13,7 +13,7 @@ Realizaremos una app que nos permita crear una lista de tareas, modicarlas, elim
 
 A modo de ejemplo adjuntamos algunas imagenes, no es necesario respetar esta misma ui:
 
-| Listado | Cración | Listado con tarea completa |
+| Listado | Creación | Listado con tarea completa |
 | --- | --- | --- |
 | ![](./listado.png) | ![](./creacion.png) | ![](./listadotareacompleta.png) |
 
